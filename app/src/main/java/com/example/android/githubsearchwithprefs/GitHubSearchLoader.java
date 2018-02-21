@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
+import com.example.android.githubsearchwithprefs.utils.NetworkUtils;
+
 import java.io.IOException;
 
 /**
@@ -13,8 +15,8 @@ import java.io.IOException;
 public class GitHubSearchLoader extends AsyncTaskLoader<String> {
     private final static String TAG = GitHubSearchLoader.class.getSimpleName();
 
-    String mSearchResultsJSON;
-    String mGitHubSearchURL;
+    private String mSearchResultsJSON;
+    private String mGitHubSearchURL;
 
     GitHubSearchLoader(Context context, String url) {
         super(context);

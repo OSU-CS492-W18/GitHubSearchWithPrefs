@@ -17,6 +17,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.android.githubsearchwithprefs.utils.GitHubUtils;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
@@ -111,7 +113,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onLoadFinished(Loader<String> loader, String data) {
         mLoadingProgressBar.setVisibility(View.INVISIBLE);
-        Log.d(TAG, "loader finished loading");
+        Log.d(TAG, "got results from loader");
         if (data != null) {
             ArrayList<GitHubUtils.SearchResult> searchResults = GitHubUtils.parseSearchResultsJSON(data);
             mGitHubSearchAdapter.updateSearchResults(searchResults);

@@ -1,4 +1,4 @@
-package com.example.android.githubsearchwithprefs;
+package com.example.android.githubsearchwithprefs.utils;
 
 import android.net.Uri;
 

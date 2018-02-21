@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.example.android.githubsearchwithprefs.utils.GitHubUtils;
+
 public class SearchResultDetailActivity extends AppCompatActivity {
 
     private TextView mTVSearchResultName;
