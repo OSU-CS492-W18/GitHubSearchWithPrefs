@@ -8,4 +8,8 @@
 
     <string name="share_chooser_title">Choose an app to share this repo</string>
     <string name="share_text_prefix">Check out this GitHub repo I found</string>
+
+    <string name="pref_sort_key" translatable="false">pref_sort</string>
+    <string name="pref_sort_title">Sort by</string>
+    <string name="pref_sort_default">stars</string>
 </resources>
