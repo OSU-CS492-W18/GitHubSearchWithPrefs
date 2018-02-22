@@ -1,10 +1,12 @@
 package com.example.android.githubsearchwithprefs.utils;
 
 import android.net.Uri;
+import android.text.TextUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,7 +21,6 @@ public class GitHubUtils {
     final static String GITHUB_SEARCH_BASE_URL = "https://api.github.com/search/repositories";
     final static String GITHUB_SEARCH_QUERY_PARAM = "q";
     final static String GITHUB_SEARCH_SORT_PARAM = "sort";
-    final static String GITHUB_SEARCH_SORT_VALUE = "stars";
 
     public static class SearchResult implements Serializable {
         public String fullName;
@@ -28,12 +29,41 @@ public class GitHubUtils {
         public int stars;
     }
 
-    public static String buildGitHubSearchURL(String searchQuery) {
-        return Uri.parse(GITHUB_SEARCH_BASE_URL).buildUpon()
-                .appendQueryParameter(GITHUB_SEARCH_QUERY_PARAM, searchQuery)
-                .appendQueryParameter(GITHUB_SEARCH_SORT_PARAM, GITHUB_SEARCH_SORT_VALUE)
-                .build()
-                .toString();
+    public static String buildGitHubSearchURL(String searchQuery, String sort, String language,
+                                              String user, boolean searchInName, boolean searchInDescription,
+                                              boolean searchInReadme) {
+
+        Uri.Builder builder = Uri.parse(GITHUB_SEARCH_BASE_URL).buildUpon();
+
+        if (!TextUtils.isEmpty(sort)) {
+                builder.appendQueryParameter(GITHUB_SEARCH_SORT_PARAM, sort);
+        }
+
+        String queryValue = new String(searchQuery);
+        if (!TextUtils.isEmpty(language)) {
+            queryValue += " language:" + language;
+        }
+        if (!TextUtils.isEmpty(user)) {
+            queryValue += " user:" + user;
+        }
+
+        ArrayList<String> searchInList = new ArrayList<>();
+        if (searchInName) {
+            searchInList.add("name");
+        }
+        if (searchInDescription) {
+            searchInList.add("description");
+        }
+        if (searchInReadme) {
+            searchInList.add("readme");
+        }
+        if (!searchInList.isEmpty()) {
+            queryValue += " in:" + TextUtils.join(",", searchInList);
+        }
+
+        builder.appendQueryParameter(GITHUB_SEARCH_QUERY_PARAM, queryValue);
+
+        return builder.build().toString();
     }
 
     public static ArrayList<SearchResult> parseSearchResultsJSON(String searchResultsJSON) {

@@ -1,10 +1,12 @@
 package com.example.android.githubsearchwithprefs;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -87,7 +89,36 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void doGitHubSearch(String searchQuery) {
-        String githubSearchURL = GitHubUtils.buildGitHubSearchURL(searchQuery);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        String sort = sharedPreferences.getString(
+                getString(R.string.pref_sort_key),
+                getString(R.string.pref_sort_default)
+        );
+
+        String language = sharedPreferences.getString(
+                getString(R.string.pref_language_key),
+                getString(R.string.pref_language_default)
+        );
+
+        String user = sharedPreferences.getString(
+                getString(R.string.pref_user_key), ""
+        );
+
+        boolean searchInName = sharedPreferences.getBoolean(
+                getString(R.string.pref_in_name_key), true
+        );
+
+        boolean searchInDescription = sharedPreferences.getBoolean(
+                getString(R.string.pref_in_description_key), true
+        );
+
+        boolean searchInReadme = sharedPreferences.getBoolean(
+                getString(R.string.pref_in_readme_key), true
+        );
+
+        String githubSearchURL = GitHubUtils.buildGitHubSearchURL(searchQuery, sort, language,
+                user, searchInName, searchInDescription, searchInReadme);
         Bundle args = new Bundle();
         args.putString(SEARCH_URL_KEY, githubSearchURL);
         mLoadingProgressBar.setVisibility(View.VISIBLE);

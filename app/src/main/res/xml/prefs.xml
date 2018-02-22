@@ -19,4 +19,25 @@
         android:defaultValue="@string/pref_language_default"
         android:summary="%s" />
 
+    <EditTextPreference
+        android:key="@string/pref_user_key"
+        android:title="@string/pref_user_title" />
+
+    <PreferenceCategory android:title="@string/pref_in_title">
+        <CheckBoxPreference
+            android:key="@string/pref_in_name_key"
+            android:title="@string/pref_in_name_title"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference
+            android:key="@string/pref_in_description_key"
+            android:title="@string/pref_in_description_title"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference
+            android:key="@string/pref_in_readme_key"
+            android:title="@string/pref_in_readme_title"
+            android:defaultValue="false" />
+    </PreferenceCategory>
+
 </PreferenceScreen>
